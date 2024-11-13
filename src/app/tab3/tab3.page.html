@@ -1,8 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      Tab 3
-    </ion-title>
+ 
   </ion-toolbar>
 </ion-header>
 
@@ -12,6 +10,52 @@
       <ion-title size="large">Tab 3</ion-title>
     </ion-toolbar>
   </ion-header>
+  
+  <ion-content class="ion-padding">
+    <div class="galaxy-button">
+      <button class="space-button" id="open-custom-dialog">
+        <span class="backdrop"></span>
+        <span class="galaxy"></span>
+        <label class="text">Login</label>
+      </button>
+      <div class="bodydrop"></div>
+    </div>
+    
+  
+    <ion-modal id="example-modal" #modal trigger="open-custom-dialog">
+      <ng-template>
+        
 
-  <app-explore-container name="Tab 3 page"></app-explore-container>
+        <form class="form">
+         <div class="form-title"><span>sign in to your</span></div>
+          <div class="title-2"><span>SPACE</span></div>
+          <div class="input-container">
+            <input class="input-mail" type="email" placeholder="Enter email">
+            <span> </span>
+          </div>
+    
+          <section class="bg-stars">
+            <span class="star"></span>
+            <span class="star"></span>
+            <span class="star"></span>
+            <span class="star"></span>
+          </section>
+    
+          <div class="input-container">
+            <input class="input-pwd" type="password" placeholder="Enter password">
+          </div>
+          <button type="submit" class="submit">
+            <span class="sign-text">Sign in</span>
+          </button>
+    
+          <p class="signup-link">
+            No account?
+            <a href="" class="up">Sign up!</a>
+          </p>
+           
+       </form>
+    
+      </ng-template>
+    </ion-modal>
+  </ion-content>
 </ion-content>
