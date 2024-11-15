@@ -16,7 +16,7 @@
       <button class="space-button" id="open-custom-dialog">
         <span class="backdrop"></span>
         <span class="galaxy"></span>
-        <label class="text">Login</label> 
+        <label class="text">Empezar</label> 
       </button> 
       <div class="bodydrop"></div> 
     </div>
@@ -25,9 +25,9 @@
                (ionWillPresent)="onWillPresent()" 
                (ionWillDismiss)="onWillDismiss()">
       <ng-template>
-        <form class="form" [formGroup]="formsReg" (ngSubmit)="onSubmit()">
-          <div class="form-title"><span>sign in to your</span></div>
-          <div class="title-2"><span>SPACE</span></div>
+        <form class="form" [formGroup]="formsReg" (ngSubmit)="Registro()">
+          <div class="form-title"><span>Inicio de Sesion</span></div>
+          <div class="title-2"><span>YEAH!</span></div>
           
           <div class="input-container">
             <input formControlName="email" class="input-mail" type="email" placeholder="Enter email">
@@ -46,12 +46,12 @@
           </div>
           
           <button type="submit" class="submit">
-            <span class="sign-text">Sign in</span>
+            <span class="sign-text">Inicia Sesion</span>
           </button>
         
           <p class="signup-link">
-            No account?
-            <a href="" class="up">Sign up!</a>
+            No tienes cuenta ?
+            <a href="" class="up">Registrate!</a>
           </p>
         </form>
       </ng-template> 
