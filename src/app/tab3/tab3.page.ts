@@ -21,7 +21,7 @@ export class Tab3Page implements OnInit {
   successMessage: string = ''; // Mensaje de éxito
   isAuthenticated: boolean = false;  // Variable para controlar la visibilidad del botón
 
-  isModalVisible: boolean = false;
+  
 
 
     // Variables para manejar el error alert
@@ -43,7 +43,21 @@ export class Tab3Page implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+
+    this.isAuthenticated = this.authService.isLoggedIn();
+
+     // Esperar unos milisegundos para verificar el estado
+  setTimeout(() => {
+    this.isAuthenticated = this.authService.isLoggedIn();
+    console.log(
+      this.isAuthenticated
+        ? 'Usuario autenticado:'
+        : 'No hay usuario autenticado.',
+      this.authService.currentUser
+    );
+  }, 500); // Ajusta el tiempo si es necesario
+  }
 
     // Función para mostrar el mensaje de éxito
     showSuccess(message: string) {
@@ -69,9 +83,6 @@ export class Tab3Page implements OnInit {
     this.showErrorAlert = false;
   }
 
-  toggleModal() {
-    this.isModalVisible = !this.isModalVisible;
-  }
   
   // Función para crear una cuenta en la base de datos de Firebase
   Registro() {
@@ -120,5 +131,15 @@ export class Tab3Page implements OnInit {
   openModal(formType: string) {
     this.isRegister = formType === 'register';
     this.modal.present(); // Abre el modal
+  }
+
+  logout() {
+    this.authService.logout()
+      .then(() => {
+        this.isAuthenticated = false;
+        
+        console.log('Sesión cerrada.');
+      })
+      .catch(error => console.error('Error al cerrar sesión:', error));
   }
 }
