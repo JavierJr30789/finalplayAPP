@@ -1,71 +1,122 @@
 /* From Uiverse.io by tarantino421 */ 
 .box {
-    --clr-shadow__border: #d9a1ff;
-    --clr-text: #F6F4EB;
-    --clr-space: #120e1e;
-    --clr-space-gr: #271950;
-    --clr-star: #E9F8F9;
-    --size: 3rem;
-    position: relative;
-    outline: 1px solid var(--clr-shadow__border);
+  --clr-shadow__border: #d9a1ff;
+  --clr-text: #F6F4EB;
+  --clr-space: #120e1e;
+  --clr-space-gr: #271950;
+  --clr-star: #E9F8F9;
+  --size: 3rem;
+  position: relative;
+  outline: 1px solid var(--clr-shadow__border);
+}
+
+.button {
+  font-weight: 600;
+  font-size: 1.5rem;
+  letter-spacing: 0.2rem;
+  background: transparent;
+  padding: calc(var(--size) / 3) var(--size);
+  border: none;
+  cursor: pointer;
+  color: var(--clr-text);
+  text-shadow: 2px 0px var(--clr-shadow__border), 0px 2px var(--clr-shadow__border),
+  -2px 0px var(--clr-shadow__border), 0px -2px var(--clr-shadow__border);
+}
+
+.space {
+  width: 100%;
+  height: 100%;
+  bottom: 0%;
+  gap: 1.5rem;
+  transition: 0.5s ease-in-out;
+  z-index: -1;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  display: flex;
+  background: linear-gradient( 160deg, var(--clr-space), var(--clr-space-gr));
+}
+
+.box:hover .space {
+  opacity: 1;
+}
+
+.star {
+  height: 4rem;
+  width: 0.3rem;
+  transition: 0.5s;
+  border-radius: 50px;
+  clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+  position: relative;
+  background-color: var(--clr-star);
+  animation: space-animation calc(0.1s * var(--i)) linear infinite;
+}
+
+@keyframes space-animation {
+  0% {
+    transform: rotate(-30deg) translateY(calc(-52% * var(--i)));
   }
-  
-  .button {
-    font-weight: 600;
-    font-size: 1.5rem;
-    letter-spacing: 0.2rem;
-    background: transparent;
-    padding: calc(var(--size) / 3) var(--size);
-    border: none;
-    cursor: pointer;
-    color: var(--clr-text);
-    text-shadow: 2px 0px var(--clr-shadow__border), 0px 2px var(--clr-shadow__border),
-    -2px 0px var(--clr-shadow__border), 0px -2px var(--clr-shadow__border);
+
+  100% {
+    transform: rotate(-30deg) translateY(calc(52% * var(--i)));
   }
-  
-  .space {
-    width: 100%;
-    height: 100%;
-    bottom: 0%;
-    gap: 1.5rem;
-    transition: 0.5s ease-in-out;
-    z-index: -1;
-    opacity: 0;
-    overflow: hidden;
-    position: absolute;
-    display: flex;
-    background: linear-gradient( 160deg, var(--clr-space), var(--clr-space-gr));
-  }
-  
-  .box:hover .space {
-    opacity: 1;
-  }
-  
-  .star {
-    height: 4rem;
-    width: 0.3rem;
-    transition: 0.5s;
-    border-radius: 50px;
-    clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
-    position: relative;
-    background-color: var(--clr-star);
-    animation: space-animation calc(0.1s * var(--i)) linear infinite;
-  }
-  
-  @keyframes space-animation {
-    0% {
-      transform: rotate(-30deg) translateY(calc(-52% * var(--i)));
-    }
-  
-    100% {
-      transform: rotate(-30deg) translateY(calc(52% * var(--i)));
-    }
-  }
-  
-  
-  
-  
-  
-  
-  
-  
+}
+
+
+.torneo-foto {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.partido {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  text-align: center;
+  padding: 10px 0;
+  background: #f4f4f4;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.equipo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 45%;
+}
+
+.equipo-foto {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+  margin-bottom: 5px;
+}
+
+.equipo-nombre {
+  font-weight: bold;
+  font-size: 14px;
+  color: #333;
+}
+
+.versus {
+  font-size: 18px;
+  font-weight: bold;
+  color: #e74c3c; /* Color rojo para "VS" */
+}
+
+.resultado {
+  text-align: center;
+  font-size: 14px;
+  font-style: italic;
+  color: #888;
+  margin-top: 5px;
+}
+
+
+
+

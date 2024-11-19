@@ -1,36 +1,44 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/compat/firestore'; // Importa AngularFirestore
+import { Firestore, collection, doc, addDoc, updateDoc, deleteDoc, getDoc, docData, collectionData } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
+import { Torneo } from './models/torneo'; // Asegúrate de importar el modelo correcto
 
 @Injectable({
   providedIn: 'root'
 })
 export class FirestoreService {
 
-  constructor(private firestore: AngularFirestore) {}
+  private torneosCollection = collection(this.firestore, 'torneos');
+
+  constructor(private firestore: Firestore) {}
 
   // Función para guardar un torneo en Firestore
-  crearTorneo(torneo: any): Promise<any> {
-    return this.firestore.collection('torneos').add(torneo);
+  crearTorneo(torneo: Torneo): Promise<any> {
+    console.log('Subiendo torneo:', torneo); // Verifica los datos antes de subir
+    return addDoc(this.torneosCollection, torneo);
   }
+  
 
   // Función para obtener todos los torneos
-  obtenerTorneos(): Observable<any[]> {
-    return this.firestore.collection('torneos').valueChanges();
+  obtenerTorneos(): Observable<Torneo[]> {
+    return collectionData(this.torneosCollection, { idField: 'id' }) as Observable<Torneo[]>;
   }
 
   // Función para obtener un torneo por ID
-  obtenerTorneoPorId(id: string): Observable<any> {
-    return this.firestore.collection('torneos').doc(id).valueChanges();
+  obtenerTorneoPorId(id: string): Observable<Torneo | undefined> {
+    const torneoDocRef = doc(this.firestore, `torneos/${id}`);
+    return docData(torneoDocRef, { idField: 'id' }) as Observable<Torneo | undefined>;
   }
 
   // Función para actualizar un torneo por ID
-  actualizarTorneo(id: string, torneo: any): Promise<void> {
-    return this.firestore.collection('torneos').doc(id).update(torneo);
+  actualizarTorneo(id: string, torneo: Partial<Torneo>): Promise<void> {
+    const torneoDocRef = doc(this.firestore, `torneos/${id}`);
+    return updateDoc(torneoDocRef, { ...torneo });
   }
 
   // Función para eliminar un torneo por ID
   eliminarTorneo(id: string): Promise<void> {
-    return this.firestore.collection('torneos').doc(id).delete();
+    const torneoDocRef = doc(this.firestore, `torneos/${id}`);
+    return deleteDoc(torneoDocRef);
   }
 }
