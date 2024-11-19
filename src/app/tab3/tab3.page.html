@@ -14,7 +14,7 @@
     <ion-content class="ion-padding">
       <ion-button *ngIf="isAuthenticated" (click)="logout()">Cerrar sesión</ion-button>
 
-      <div *ngIf="isAuthenticated" class="profile-form-container">
+      <div *ngIf="showProfileForm && isAuthenticated" class="profile-form-container">
         <form [formGroup]="profileForm" (ngSubmit)="saveProfile()">
           <h2>Editar Perfil</h2>
   
@@ -30,9 +30,14 @@
   
           <ion-item>
             <ion-label position="floating">Photo URL</ion-label>
-            <ion-input formControlName="photoURL" type="text" placeholder="Enter photo URL"></ion-input>
+            <div class="input-container">
+              <ion-input formControlName="photoURL" type="text" placeholder="Enter photo URL"></ion-input>
+              <input id="fileInput" type="file" (change)="onFileSelected($event)" accept="image/*" hidden />
+              <label for="fileInput" class="custom-file-label">Choose Image</label>
+            </div>
           </ion-item>
-  
+          
+
           <ion-item>
             <ion-label position="floating">Description</ion-label>
             <ion-input formControlName="description" type="text" placeholder="Enter description"></ion-input>
@@ -61,6 +66,27 @@
           <ion-button expand="full" type="submit" [disabled]="!profileForm.valid">Guardar Perfil</ion-button>
         </form>
       </div>
+     
+        <!-- Tarjeta del perfil -->
+        <div *ngIf="!showProfileForm && isAuthenticated" class="profile-card">
+          <div class="image">
+            <img [src]="profile?.photoURL || 'assets/default-avatar.png'" alt="Foto de perfil" />
+          </div>
+          <div class="heading">
+            <h3>¡Perfil Actualizado!</h3>
+            <p><strong>Nombre:</strong> {{ profile?.displayName }}</p>
+            <p><strong>Email:</strong> {{ profile?.email }}</p>
+            <p><strong>Descripción:</strong> {{ profile?.description || 'Sin descripción' }}</p>
+            <p><strong>Fecha de Nacimiento:</strong> {{ profile?.birthDate | date: 'longDate' || 'No proporcionada' }}</p>
+            <p><strong>Rol:</strong> {{ profile?.role || 'Sin especificar' }}</p>
+            <p><strong>Ubicación:</strong>
+              {{ profile?.city || 'Ciudad desconocida' }},
+              {{ profile?.country || 'País desconocido' }}
+            </p>
+            
+            <ion-button (click)="showProfileForm = true">Editar Perfil</ion-button>
+          </div>
+        </div>
 
   <!--Boton para abrir el modal de inicio de sesion-->
       <div class="galaxy-button" *ngIf="!isAuthenticated">  <!-- Solo se muestra si no está autenticado -->

@@ -23,6 +23,9 @@ export class Tab3Page implements OnInit {
   showSuccessAlert: boolean = false; // Variable para controlar la visibilidad del mensaje de éxito
   successMessage: string = ''; // Mensaje de éxito
   isAuthenticated: boolean = false;  // Variable para controlar la visibilidad del botón
+  showProfileForm: boolean = true; // Nueva variable para controlar la visibilidad del formulario
+  
+
 
   // Variables para manejar el error alert
   showErrorAlert: boolean = false; // Controla si se muestra el error
@@ -83,6 +86,7 @@ export class Tab3Page implements OnInit {
     if (userId) {
       this.profileService.getProfile(userId).subscribe((profileData: DocumentData | undefined) => {
         if (profileData) {
+          
           // Si profileData no es undefined, lo asignamos al perfil
           this.profile = profileData as Profile; // Hacemos un cast de DocumentData a Profile
           this.profileForm.patchValue(profileData);  // Cargar los datos en el formulario
@@ -151,18 +155,41 @@ export class Tab3Page implements OnInit {
     this.isRegister = !this.isRegister;  // Cambia entre registro y logeo
   }
 
-  // Función para guardar los datos del perfil
-  saveProfile() {
-    if (this.profileForm.valid) {
-      const profileData: Profile = this.profileForm.value;
-      this.profileService.saveProfile(profileData).then(() => {
-        this.showSuccess('Perfil actualizado con éxito');
-      }).catch((error) => {
-        this.showError('Error al actualizar el perfil');
-        console.error(error);
-      });
-    }
+ // Método para manejar la carga de un archivo
+ onFileSelected(event: any): void {
+  const file = event.target.files[0];
+  if (file) {
+    // Aquí puedes subir el archivo a Firebase Storage u otro servidor
+    this.uploadFile(file);
   }
+}
+
+
+saveProfile() {
+  if (this.profileForm.valid) {
+    const profileData: Profile = this.profileForm.value;
+    this.profileService.saveProfile(profileData).then(() => {
+      this.profile = profileData;  // Actualiza el perfil
+      this.showSuccess('Perfil actualizado con éxito');
+      this.showProfileForm = false;  // Ocultar el formulario después de guardar
+    }).catch((error) => {
+      this.showError('Error al actualizar el perfil');
+      console.error(error);
+    });
+  }
+}
+
+  // Función para subir el archivo a Firebase Storage o servidor
+  uploadFile(file: File): void {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const imageUrl = reader.result as string;
+      this.profileForm.patchValue({ photoURL: imageUrl });
+    };
+    reader.readAsDataURL(file);  // Convierte el archivo a una URL base64
+  }
+
+
 
   // Función para eliminar el perfil
   deleteProfile() {
