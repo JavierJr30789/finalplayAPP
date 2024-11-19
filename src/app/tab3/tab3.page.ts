@@ -91,6 +91,7 @@ export class Tab3Page implements OnInit {
         this.showSuccess('Registrado con exito!'); // Mostrar mensaje de éxito al registrarse
   this.isAuthenticated = true;  // Cambiar a true cuando el logeo es exitoso
         console.log('Registrado con exito',response);
+        this.modal.dismiss(); // Cerrar el modal después de un registro exitoso
       })
       .catch(error =>{ 
         this.showError('Error al registrarse'); // Muestra el mensaje de error
@@ -105,6 +106,7 @@ export class Tab3Page implements OnInit {
         this.showSuccess('Logeado con exito!'); // Mostrar mensaje de éxito al logearse
         this.isAuthenticated = true;  // Cambiar a true cuando el logeo es exitoso
         console.log('Logeado con exito',response);
+        this.modal.dismiss(); // Cerrar el modal después de un registro exitoso
       })
       .catch(error => {
         this.showError('Error al Logearse'); // Muestra el mensaje de error
