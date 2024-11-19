@@ -78,7 +78,7 @@
             <p><strong>Email:</strong> {{ profile?.email }}</p>
             <p><strong>Descripción:</strong> {{ profile?.description || 'Sin descripción' }}</p>
             <p><strong>Fecha de Nacimiento:</strong> {{ profile?.birthDate | date: 'longDate' || 'No proporcionada' }}</p>
-            <p><strong>Rol:</strong> {{ profile?.role || 'Sin especificar' }}</p>
+            <p><strong>tipo de usuario</strong> {{ profile?.role || 'Sin especificar' }}</p>
             <p><strong>Ubicación:</strong>
               {{ profile?.city || 'Ciudad desconocida' }},
               {{ profile?.country || 'País desconocido' }}

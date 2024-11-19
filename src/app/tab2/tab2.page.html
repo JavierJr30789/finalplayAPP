@@ -15,14 +15,16 @@
   <ion-button expand="full" (click)="abrirModal()">Crear Torneo</ion-button>
 
   <!-- Mostrar lista de torneos existentes -->
-  <ion-list>
+  <ion-list >
+    
     <ion-item *ngFor="let torneo of torneos$ | async">
       <ion-label>
         <img src="{{torneo.fotoTorneoUrl}}" alt="Foto del Torneo" class="torneo-foto">
         <h2>{{ torneo.nombre }}</h2>
         <p>{{ torneo.descripcion }}</p>
-
+     
         <!-- Mostrar el fixture de cada torneo -->
+        
         <div *ngIf="torneo.fixture && torneo.fixture.length > 0">
           <h3>Fixture</h3>
           <ion-list>
@@ -35,7 +37,7 @@
                 </div>
                 
                 <!-- Texto "VS" -->
-                <div class="versus">VS</div>
+                <div class="versus" style="color: gold;"><b>VS</b></div>
 
                 <!-- Equipo 2 -->
                 <div class="equipo">
@@ -47,8 +49,13 @@
               <p class="resultado">Resultado: {{ partido.resultado || 'Por jugar' }}</p>
             </ion-item>
           </ion-list>
+          
         </div>
+    
+        
       </ion-label>
     </ion-item>
+  
   </ion-list>
+  
 </ion-content>
