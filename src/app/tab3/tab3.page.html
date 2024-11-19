@@ -1,322 +1,143 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
- 
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
+  <ion-header [translucent]="true">
     <ion-toolbar>
-      <ion-title size="large">Tab 3</ion-title>
+  
     </ion-toolbar>
   </ion-header>
+
+  <ion-content [fullscreen]="true">
+    <ion-header collapse="condense">
+      <ion-toolbar>
+        <ion-title size="large">Tab 3</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    
+    <ion-content class="ion-padding">
+      <ion-button *ngIf="isAuthenticated" (click)="logout()">Cerrar sesión</ion-button>
+
+      <div *ngIf="isAuthenticated" class="profile-form-container">
+        <form [formGroup]="profileForm" (ngSubmit)="saveProfile()">
+          <h2>Editar Perfil</h2>
   
-  <ion-content class="ion-padding">
-    <ion-button *ngIf="isAuthenticated" (click)="logout()">Cerrar sesión</ion-button>
-
-<!--Boton para abrir el modal de inicio de sesion-->
-    <div class="galaxy-button" *ngIf="!isAuthenticated">  <!-- Solo se muestra si no está autenticado -->
-      <button class="space-button" id="open-custom-dialog" (click)="openModal('register')">
-        <span class="backdrop"></span>
-        <span class="galaxy"></span>
-        <label class="text">Empezar</label>
-      </button>
-      <div class="bodydrop"></div>
-    </div>
-    
-    <!-- Modal -->
-    <ion-modal id="example-modal" #modal trigger="open-custom-dialog" 
-               (ionWillPresent)="onWillPresent()" (ionWillDismiss)="onWillDismiss()">
-      <ng-template>
-        <!-- Formulario Condicional -->
-        <form class="form" [formGroup]="isRegister ? formsReg : formLog" (ngSubmit)="isRegister ? Registro() : Logeo()">
-          <div class="form-title"><span>{{ isRegister ? 'Welcome user' : 'Welcome back' }}</span></div>
-          <div class="title-2"><span>{{ isRegister ? 'Sign in' : 'Log in' }}</span></div>
-          
-          <div class="input-container">
-            <input formControlName="email" class="input-mail" type="email" placeholder="Enter email">
-          </div>
-    
-          <section class="bg-stars">
-            <span class="star"></span>
-            <span class="star"></span>
-            <span class="star"></span>
-            <span class="star"></span>
-          </section>
-    
-          <div class="input-container">
-            <input formControlName="password" class="input-pwd" type="password" placeholder="Enter password">
-          </div>
-    
-          <button type="submit" class="submit">
-            <span class="sign-text">{{ isRegister ? 'Register' : 'Login' }}</span>
-          </button>
-    
-          <p class="signup-link">
-            {{ isRegister ? 'Already have an account?' : 'Don\'t have an account?' }}
-            <a href="javascript:void(0)"  (click)="toggleForm()">{{ isRegister ? 'Log in!' : 'Sign up!' }}</a>
-          </p>
+          <ion-item>
+            <ion-label position="floating">Display Name</ion-label>
+            <ion-input formControlName="displayName" type="text" placeholder="Enter display name"></ion-input>
+          </ion-item>
+  
+          <ion-item>
+            <ion-label position="floating">Email</ion-label>
+            <ion-input formControlName="email" type="email" placeholder="Enter email"></ion-input>
+          </ion-item>
+  
+          <ion-item>
+            <ion-label position="floating">Photo URL</ion-label>
+            <ion-input formControlName="photoURL" type="text" placeholder="Enter photo URL"></ion-input>
+          </ion-item>
+  
+          <ion-item>
+            <ion-label position="floating">Description</ion-label>
+            <ion-input formControlName="description" type="text" placeholder="Enter description"></ion-input>
+          </ion-item>
+  
+          <ion-item>
+            <ion-label position="floating">Birth Date</ion-label>
+            <ion-input formControlName="birthDate" type="date" placeholder="Enter birth date"></ion-input>
+          </ion-item>
+  
+          <ion-item>
+            <ion-label position="floating">Role</ion-label>
+            <ion-input formControlName="role" type="text" placeholder="Enter role"></ion-input>
+          </ion-item>
+  
+          <ion-item>
+            <ion-label position="floating">Country</ion-label>
+            <ion-input formControlName="country" type="text" placeholder="Enter country"></ion-input>
+          </ion-item>
+  
+          <ion-item>
+            <ion-label position="floating">City</ion-label>
+            <ion-input formControlName="city" type="text" placeholder="Enter city"></ion-input>
+          </ion-item>
+  
+          <ion-button expand="full" type="submit" [disabled]="!profileForm.valid">Guardar Perfil</ion-button>
         </form>
-      </ng-template>
-    </ion-modal>
-    <!-- Success alert -->
-<div *ngIf="showSuccessAlert" class="success">
-  <div class="success__icon">
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" height="24" fill="none">
-      <path fill-rule="evenodd" fill="#393a37" d="m12 1c-6.075 0-11 4.925-11 11s4.925 11 11 11 11-4.925 11-11-4.925-11-11-11zm4.768 9.14c.0878-.1004.1546-.21726.1966-.34383.0419-.12657.0581-.26026.0477-.39319-.0105-.13293-.0475-.26242-.1087-.38085-.0613-.11844-.1456-.22342-.2481-.30879-.1024-.08536-.2209-.14938-.3484-.18828s-.2616-.0519-.3942-.03823c-.1327.01366-.2612.05372-.3782.1178-.1169.06409-.2198.15091-.3027.25537l-4.3 5.159-2.225-2.226c-.1886-.1822-.4412-.283-.7034-.2807s-.51301.1075-.69842.2929-.29058.4362-.29285.6984c-.00228.2622.09851.5148.28067.7034l3 3c.0983.0982.2159.1748.3454.2251.1295.0502.2681.0729.4069.0665.1387-.0063.2747-.0414.3991-.1032.1244-.0617.2347-.1487.3236-.2554z" clip-rule="evenodd"></path>
-    </svg>
-  </div>
-  <div class="success__title">{{ successMessage }}</div>
-  <div class="success__close" (click)="closeSuccessAlert()">
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" viewBox="0 0 20 20" height="20">
-      <path fill="#393a37" d="m15.8333 5.34166-1.175-1.175-4.6583 4.65834-4.65833-4.65834-1.175 1.175 4.65833 4.65834-4.65833 4.6583 1.175 1.175 4.65833-4.6583 4.6583 4.6583 1.175-1.175-4.6583-4.6583z"></path>
-    </svg>
-  </div>
-</div>
+      </div>
 
-<!-- Error alert -->
-<div *ngIf="showErrorAlert" class="error">
-  <div class="error__icon">
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" height="24" fill="none">
-      <path fill="#393a37" d="m13 13h-2v-6h2zm0 4h-2v-2h2zm-1-15c-1.3132 0-2.61358.25866-3.82683.7612-1.21326.50255-2.31565 1.23915-3.24424 2.16773-1.87536 1.87537-2.92893 4.41891-2.92893 7.07107 0 2.6522 1.05357 5.1957 2.92893 7.0711.92859.9286 2.03098 1.6651 3.24424 2.1677 1.21325.5025 2.51363.7612 3.82683.7612 2.6522 0 5.1957-1.0536 7.0711-2.9289 1.8753-1.8754 2.9289-4.4189 2.9289-7.0711 0-1.3132-.2587-2.61358-.7612-3.82683-.5026-1.21326-1.2391-2.31565-2.1677-3.24424-.9286-.92858-2.031-1.66518-3.2443-2.16773-1.2132-.50254-2.5136-.7612-3.8268-.7612z"></path>
-    </svg>
-  </div>
-  <div class="error__title">{{ errorMessage }}</div>
-  <div class="error__close" (click)="closeErrorAlert()">
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" viewBox="0 0 20 20" height="20">
-      <path fill="#393a37" d="m15.8333 5.34166-1.175-1.175-4.6583 4.65834-4.65833-4.65834-1.175 1.175 4.65833 4.65834-4.65833 4.6583 1.175 1.175 4.65833-4.6583 4.6583 4.6583 1.175-1.175-4.6583-4.6583z"></path>
-    </svg>
-  </div>
-</div>
-
-
-<!--creacion de perfil/edicion de perfil-->
-
-<div id="Container" *ngIf="isAuthenticated">
-  <form class="form2">
-    <div id="login-lable">Perfil Create</div>
-
-    <button type="button">Perfil Picture</button>
-
-    <input class="form2-content" type="text" placeholder="UserName" />
-
-    <input class="form2-content" type="password" placeholder="PassWord" />
-    
-    <input class="form2-content" type="email" placeholder="Email" />
-
-    <input class="form2-content" type="password" placeholder="Confirm Password" />
-
-
-    <button type="button">Create</button>
-  </form>
-
-  <div id="rays">
-    <svg
-      fill="none"
-      viewBox="0 0 299 152"
-      height="9em"
-      width="18em"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        fill="url(#paint0_linear_8_3)"
-        d="M149.5 152H133.42L9.53674e-07 4.70132e-06H149.5L299 4.70132e-06L165.58 152H149.5Z"
-      ></path>
-      <defs>
-        <linearGradient
-          gradientUnits="userSpaceOnUse"
-          y2="12.1981"
-          x2="150.12"
-          y1="152"
-          x1="149.5"
-          id="paint0_linear_8_3"
-        >
-          <stop stop-color="#00E0FF"></stop>
-          <stop stop-opacity="0" stop-color="#65EDFF" offset="1"></stop>
-        </linearGradient>
-      </defs>
-    </svg>
+  <!--Boton para abrir el modal de inicio de sesion-->
+      <div class="galaxy-button" *ngIf="!isAuthenticated">  <!-- Solo se muestra si no está autenticado -->
+        <button class="space-button" id="open-custom-dialog" (click)="openModal('register')">
+          <span class="backdrop"></span>
+          <span class="galaxy"></span>
+          <label class="text">Empezar</label>
+        </button>
+        <div class="bodydrop"></div>
+      </div>
+      
+      <!-- Modal -->
+      <ion-modal id="example-modal" #modal trigger="open-custom-dialog" 
+                (ionWillPresent)="onWillPresent()" (ionWillDismiss)="onWillDismiss()">
+        <ng-template>
+          <!-- Formulario Condicional -->
+          <form class="form" [formGroup]="isRegister ? formsReg : formLog" (ngSubmit)="isRegister ? Registro() : Logeo()">
+            <div class="form-title"><span>{{ isRegister ? 'Welcome user' : 'Welcome back' }}</span></div>
+            <div class="title-2"><span>{{ isRegister ? 'Sign in' : 'Log in' }}</span></div>
+            
+            <div class="input-container">
+              <input formControlName="email" class="input-mail" type="email" placeholder="Enter email">
+            </div>
+      
+            <section class="bg-stars">
+              <span class="star"></span>
+              <span class="star"></span>
+              <span class="star"></span>
+              <span class="star"></span>
+            </section>
+      
+            <div class="input-container">
+              <input formControlName="password" class="input-pwd" type="password" placeholder="Enter password">
+            </div>
+      
+            <button type="submit" class="submit">
+              <span class="sign-text">{{ isRegister ? 'Register' : 'Login' }}</span>
+            </button>
+      
+            <p class="signup-link">
+              {{ isRegister ? 'Already have an account?' : 'Don\'t have an account?' }}
+              <a href="javascript:void(0)"  (click)="toggleForm()">{{ isRegister ? 'Log in!' : 'Sign up!' }}</a>
+            </p>
+          </form>
+        </ng-template>
+      </ion-modal>
+      <!-- Success alert -->
+  <div *ngIf="showSuccessAlert" class="success">
+    <div class="success__icon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" height="24" fill="none">
+        <path fill-rule="evenodd" fill="#393a37" d="m12 1c-6.075 0-11 4.925-11 11s4.925 11 11 11 11-4.925 11-11-4.925-11-11-11zm4.768 9.14c.0878-.1004.1546-.21726.1966-.34383.0419-.12657.0581-.26026.0477-.39319-.0105-.13293-.0475-.26242-.1087-.38085-.0613-.11844-.1456-.22342-.2481-.30879-.1024-.08536-.2209-.14938-.3484-.18828s-.2616-.0519-.3942-.03823c-.1327.01366-.2612.05372-.3782.1178-.1169.06409-.2198.15091-.3027.25537l-4.3 5.159-2.225-2.226c-.1886-.1822-.4412-.283-.7034-.2807s-.51301.1075-.69842.2929-.29058.4362-.29285.6984c-.00228.2622.09851.5148.28067.7034l3 3c.0983.0982.2159.1748.3454.2251.1295.0502.2681.0729.4069.0665.1387-.0063.2747-.0414.3991-.1032.1244-.0617.2347-.1487.3236-.2554z" clip-rule="evenodd"></path>
+      </svg>
+    </div>
+    <div class="success__title">{{ successMessage }}</div>
+    <div class="success__close" (click)="closeSuccessAlert()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" viewBox="0 0 20 20" height="20">
+        <path fill="#393a37" d="m15.8333 5.34166-1.175-1.175-4.6583 4.65834-4.65833-4.65834-1.175 1.175 4.65833 4.65834-4.65833 4.6583 1.175 1.175 4.65833-4.6583 4.6583 4.6583 1.175-1.175-4.6583-4.6583z"></path>
+      </svg>
+    </div>
   </div>
 
-  <div id="emiter">
-    <svg
-      fill="none"
-      viewBox="0 0 160 61"
-      height="61"
-      width="160"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-    
-      <g filter="url(#filter0_di_1_38)">
-        <path
-          fill="#2B2B2B"
-          d="M80 27.9997C121.974 27.9997 156 22.4032 156 15.4996L156 40.4998C156 47.4034 121.974 52.9998 80 52.9998C38.0265 52.9998 4.00028 47.4034 4 40.4998V40.4998V15.51C4.0342 22.4089 38.0474 27.9997 80 27.9997Z"
-          clip-rule="evenodd"
-          fill-rule="evenodd"
-        ></path>
-      </g>
-      <ellipse
-        fill="url(#paint0_radial_1_38)"
-        ry="4.80773"
-        rx="28.3956"
-        cy="17.4236"
-        cx="80"
-      ></ellipse>
-      <g filter="url(#filter1_i_1_38)">
-        <path
-          fill="#323232"
-          d="M80 28.0002C121.974 28.0002 156 22.4037 156 15.5001C156 8.59648 121.974 3 80 3C38.0264 3 4 8.59648 4 15.5001C4 22.4037 38.0264 28.0002 80 28.0002ZM80.0001 20.308C96.1438 20.308 109.231 18.1555 109.231 15.5002C109.231 12.845 96.1438 10.6925 80.0001 10.6925C63.8564 10.6925 50.7693 12.845 50.7693 15.5002C50.7693 18.1555 63.8564 20.308 80.0001 20.308Z"
-          clip-rule="evenodd"
-          fill-rule="evenodd"
-        ></path>
-      </g>
-      <g filter="url(#filter2_di_1_38)">
-        <path
-          fill="#378BA6"
-          d="M106.725 17.4505C108.336 16.8543 109.231 16.1943 109.231 15.4999C109.231 12.8446 96.1438 10.6921 80.0001 10.6921C63.8564 10.6921 50.7693 12.8446 50.7693 15.4999C50.7693 16.1943 51.6645 16.8543 53.2752 17.4504C53.275 17.4414 53.2748 17.4323 53.2748 17.4232C53.2748 14.768 65.2401 12.6155 80.0001 12.6155C94.7601 12.6155 106.725 14.768 106.725 17.4232C106.725 17.4323 106.725 17.4414 106.725 17.4505Z"
-          clip-rule="evenodd"
-          fill-rule="evenodd"
-        ></path>
-      </g>
-      <defs>
-        <filter
-          color-interpolation-filters="sRGB"
-          filterUnits="userSpaceOnUse"
-          height="45.5002"
-          width="160"
-          y="15.4996"
-          x="0"
-          id="filter0_di_1_38"
-        >
-          <feFlood result="BackgroundImageFix" flood-opacity="0"></feFlood>
-          <feColorMatrix
-            result="hardAlpha"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            type="matrix"
-            in="SourceAlpha"
-          ></feColorMatrix>
-          <feOffset dy="4"></feOffset>
-          <feGaussianBlur stdDeviation="2"></feGaussianBlur>
-          <feComposite operator="out" in2="hardAlpha"></feComposite>
-          <feColorMatrix
-            values="0 0 0 0 0.620833 0 0 0 0 0.620833 0 0 0 0 0.620833 0 0 0 0.25 0"
-            type="matrix"
-          ></feColorMatrix>
-          <feBlend
-            result="effect1_dropShadow_1_38"
-            in2="BackgroundImageFix"
-            mode="normal"
-          ></feBlend>
-          <feBlend
-            result="shape"
-            in2="effect1_dropShadow_1_38"
-            in="SourceGraphic"
-            mode="normal"
-          ></feBlend>
-          <feColorMatrix
-            result="hardAlpha"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            type="matrix"
-            in="SourceAlpha"
-          ></feColorMatrix>
-          <feOffset></feOffset>
-          <feGaussianBlur stdDeviation="8"></feGaussianBlur>
-          <feComposite
-            k3="1"
-            k2="-1"
-            operator="arithmetic"
-            in2="hardAlpha"
-          ></feComposite>
-          <feColorMatrix
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0"
-            type="matrix"
-          ></feColorMatrix>
-          <feBlend
-            result="effect2_innerShadow_1_38"
-            in2="shape"
-            mode="normal"
-          ></feBlend>
-        </filter>
-        <filter
-          color-interpolation-filters="sRGB"
-          filterUnits="userSpaceOnUse"
-          height="25.0002"
-          width="152"
-          y="3"
-          x="4"
-          id="filter1_i_1_38"
-        >
-          <feFlood result="BackgroundImageFix" flood-opacity="0"></feFlood>
-          <feBlend
-            result="shape"
-            in2="BackgroundImageFix"
-            in="SourceGraphic"
-            mode="normal"
-          ></feBlend>
-          <feColorMatrix
-            result="hardAlpha"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            type="matrix"
-            in="SourceAlpha"
-          ></feColorMatrix>
-          <feMorphology
-            result="effect1_innerShadow_1_38"
-            in="SourceAlpha"
-            operator="erode"
-            radius="3"
-          ></feMorphology>
-          <feOffset dy="3"></feOffset>
-          <feGaussianBlur stdDeviation="3"></feGaussianBlur>
-          <feComposite operator="arithmetic" in2="SourceAlpha"></feComposite>
-          <feColorMatrix
-            values="0 0 0 0 0.429 0 0 0 0 0.218 0 0 0 0 0.213 0 0 0 0.47 0"
-            type="matrix"
-          ></feColorMatrix>
-          <feBlend
-            result="effect2_dropShadow_1_38"
-            in2="shape"
-            mode="normal"
-          ></feBlend>
-        </filter>
-        <filter
-          color-interpolation-filters="sRGB"
-          filterUnits="userSpaceOnUse"
-          height="5.0002"
-          width="152"
-          y="12"
-          x="4"
-          id="filter2_di_1_38"
-        >
-          <feFlood result="BackgroundImageFix" flood-opacity="0"></feFlood>
-          <feColorMatrix
-            result="hardAlpha"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            type="matrix"
-            in="SourceAlpha"
-          ></feColorMatrix>
-          <feOffset dy="1"></feOffset>
-          <feGaussianBlur stdDeviation="1"></feGaussianBlur>
-          <feComposite operator="in" in2="SourceAlpha"></feComposite>
-          <feColorMatrix
-            values="0 0 0 0 0.429 0 0 0 0 0.218 0 0 0 0 0.213 0 0 0 0.47 0"
-            type="matrix"
-          ></feColorMatrix>
-        </filter>
-        <radialGradient
-          cx="0"
-          cy="0"
-          r="1"
-          gradientUnits="userSpaceOnUse"
-          gradientTransform="translate(80 17.4236) rotate(90) scale(4.80773)"
-          id="paint0_radial_1_38"
-        >
-          <stop stop-opacity="0" stop-color="#61A8F7"></stop>
-          <stop stop-color="#24A8EC"></stop>
-        </radialGradient>
-      </defs>
-    </svg>
+  <!-- Error alert -->
+  <div *ngIf="showErrorAlert" class="error">
+    <div class="error__icon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" height="24" fill="none">
+        <path fill="#393a37" d="m13 13h-2v-6h2zm0 4h-2v-2h2zm-1-15c-1.3132 0-2.61358.25866-3.82683.7612-1.21326.50255-2.31565 1.23915-3.24424 2.16773-1.87536 1.87537-2.92893 4.41891-2.92893 7.07107 0 2.6522 1.05357 5.1957 2.92893 7.0711.92859.9286 2.03098 1.6651 3.24424 2.1677 1.21325.5025 2.51363.7612 3.82683.7612 2.6522 0 5.1957-1.0536 7.0711-2.9289 1.8753-1.8754 2.9289-4.4189 2.9289-7.0711 0-1.3132-.2587-2.61358-.7612-3.82683-.5026-1.21326-1.2391-2.31565-2.1677-3.24424-.9286-.92858-2.031-1.66518-3.2443-2.16773-1.2132-.50254-2.5136-.7612-3.8268-.7612z"></path>
+      </svg>
+    </div>
+    <div class="error__title">{{ errorMessage }}</div>
+    <div class="error__close" (click)="closeErrorAlert()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" viewBox="0 0 20 20" height="20">
+        <path fill="#393a37" d="m15.8333 5.34166-1.175-1.175-4.6583 4.65834-4.65833-4.65834-1.175 1.175 4.65833 4.65834-4.65833 4.6583 1.175 1.175 4.65833-4.6583 4.6583 4.6583 1.175-1.175-4.6583-4.6583z"></path>
+      </svg>
+    </div>
   </div>
-</div>
 
+
+
+    </ion-content>
   </ion-content>
-</ion-content>
